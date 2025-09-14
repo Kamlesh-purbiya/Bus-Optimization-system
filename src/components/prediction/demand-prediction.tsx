@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  predictPassengerDemand,
   PredictPassengerDemandOutput,
 } from "@/ai/flows/predict-passenger-demand";
 import { Button } from "@/components/ui/button";
@@ -24,33 +23,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { routes, historicalDataString } from "@/lib/data";
+import { routes } from "@/lib/data";
 import { Loader2, Wand2 } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
-import { ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import { handlePrediction } from "@/app/prediction/actions";
 
 const formSchema = z.object({
   routeId: z.string().min(1, "Please select a route."),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
-async function handlePrediction(
-  data: FormValues
-): Promise<PredictPassengerDemandOutput | { error: string }> {
-  "use server";
-  try {
-    const output = await predictPassengerDemand({
-      routeId: data.routeId,
-      timestamp: new Date().toISOString(),
-      historicalData: historicalDataString,
-    });
-    return output;
-  } catch (e: any) {
-    console.error(e);
-    return { error: e.message || "An unknown error occurred." };
-  }
-}
+const chartConfig = {
+  demand: {
+    label: "Passengers",
+    color: "hsl(var(--chart-1))",
+  },
+};
 
 export function DemandPrediction() {
   const [prediction, setPrediction] =
@@ -130,14 +120,16 @@ export function DemandPrediction() {
                 <div>
                     <h3 className="font-semibold text-lg">Demand Forecast</h3>
                     <div className="h-[200px] mt-2">
+                      <ChartContainer config={chartConfig} className="h-[200px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={chartData}>
                                 <XAxis dataKey="hour" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
                                 <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--muted))' }} />
-                                <Bar dataKey="demand" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} name="Passengers" />
+                                <Bar dataKey="demand" fill="var(--color-demand)" radius={[4, 4, 0, 0]} name="Passengers" />
                             </BarChart>
                         </ResponsiveContainer>
+                      </ChartContainer>
                     </div>
                 </div>
                 <div>

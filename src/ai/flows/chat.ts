@@ -4,20 +4,22 @@
  * @fileOverview A simple conversational AI flow.
  *
  * - generateChatResponse - A function that generates a response to a user's message.
- * - GenerateChatResponseInput - The input type for the generateChatResponse function.
+ * - GenerateChatResponseInput - The input type for the generateChatResponseInput function.
  * - GenerateChatResponseOutput - The return type for the generateChatResponse function.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+const ChatMessageSchema = z.object({
+  role: z.enum(['user', 'model']),
+  content: z.array(z.object({
+    text: z.string(),
+  })),
+});
+
 const GenerateChatResponseInputSchema = z.object({
-  history: z.array(z.object({
-    role: z.enum(['user', 'model']),
-    content: z.array(z.object({
-      text: z.string(),
-    })),
-  })).describe('The conversation history.'),
+  history: z.array(ChatMessageSchema).describe('The conversation history.'),
   message: z.string().describe('The user\'s message.'),
 });
 export type GenerateChatResponseInput = z.infer<typeof GenerateChatResponseInputSchema>;
@@ -42,6 +44,8 @@ const chatPrompt = ai.definePrompt(
       
       You can answer questions about the app, bus routes, and provide general assistance to users.
       
+      You must be able to understand and respond in the following languages: English, Hindi, Gujarati, and Hinglish. Detect the user's language from their message and respond in the same language.
+
       Keep your responses concise and friendly.
       `,
     },
@@ -56,10 +60,25 @@ const generateChatResponseFlow = ai.defineFlow(
   },
   async (input) => {
     const { history, message } = input;
-    const { output } = await chatPrompt({
-        history,
-        message,
+
+    const fullHistory = [
+      ...history,
+      {
+        role: 'user' as const,
+        content: [{ text: message }],
+      },
+    ];
+
+    const model = ai.getModel();
+    const { output } = await model.generate({
+      history: fullHistory,
+      prompt: chatPrompt.prompt,
+      output: {
+        format: 'json',
+        schema: GenerateChatResponseOutputSchema,
+      }
     });
+
     return output!;
   }
 );

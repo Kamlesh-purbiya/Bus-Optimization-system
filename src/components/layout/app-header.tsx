@@ -12,7 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Search } from "lucide-react";
+import { Globe } from "lucide-react";
+import { SearchDialog } from "@/components/search/search-dialog";
 
 const titles: { [key: string]: string } = {
   "/": "Dashboard",
@@ -33,11 +34,24 @@ export function AppHeader() {
 
       <h1 className="text-lg font-semibold md:text-xl">{title}</h1>
 
-      <div className="ml-auto flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Search className="h-5 w-5" />
-          <span className="sr-only">Search</span>
-        </Button>
+      <div className="ml-auto flex items-center gap-2">
+        <SearchDialog />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <Globe className="h-5 w-5" />
+              <span className="sr-only">Change language</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Language</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>English</DropdownMenuItem>
+            <DropdownMenuItem>Hindi</DropdownMenuItem>
+            <DropdownMenuItem>Gujarati</DropdownMenuItem>
+            <DropdownMenuItem>Hinglish</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="rounded-full">

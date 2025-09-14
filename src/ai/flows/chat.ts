@@ -35,21 +35,14 @@ export async function generateChatResponse(
   return generateChatResponseFlow(input);
 }
 
-const chatPrompt = ai.definePrompt(
-    {
-      name: 'chatPrompt',
-      input: { schema: GenerateChatResponseInputSchema },
-      output: { schema: GenerateChatResponseOutputSchema },
-      prompt: `You are a helpful AI assistant for the TransitSage bus management app. Your name is Sage.
+const chatPrompt = `You are a helpful AI assistant for the TransitSage bus management app. Your name is Sage.
       
-      You can answer questions about the app, bus routes, and provide general assistance to users.
-      
-      You must be able to understand and respond in the following languages: English, Hindi, Gujarati, and Hinglish. Detect the user's language from their message and respond in the same language.
+You can answer questions about the app, bus routes, and provide general assistance to users.
 
-      Keep your responses concise and friendly.
-      `,
-    },
-  );
+You must be able to understand and respond in the following languages: English, Hindi, Gujarati, and Hinglish. Detect the user's language from their message and respond in the same language.
+
+Keep your responses concise and friendly.
+`;
   
 
 const generateChatResponseFlow = ai.defineFlow(
@@ -69,10 +62,9 @@ const generateChatResponseFlow = ai.defineFlow(
       },
     ];
 
-    const model = ai.getModel();
-    const { output } = await model.generate({
+    const { output } = await ai.generate({
       history: fullHistory,
-      prompt: chatPrompt.prompt,
+      prompt: chatPrompt,
       output: {
         format: 'json',
         schema: GenerateChatResponseOutputSchema,

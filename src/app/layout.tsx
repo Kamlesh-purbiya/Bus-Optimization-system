@@ -5,6 +5,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { AppHeader } from "@/components/layout/app-header";
 import { SidebarInset } from "@/components/ui/sidebar";
+import { ChatDialog } from "@/components/chat/chat-dialog";
 
 export const metadata: Metadata = {
   title: "TransitSage",
@@ -37,6 +38,7 @@ export default function RootLayout({
                     </main>
                 </SidebarInset>
             </div>
+          <ChatDialog />
           <Toaster />
         </SidebarProvider>
       </body>

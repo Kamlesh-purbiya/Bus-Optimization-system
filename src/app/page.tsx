@@ -1,12 +1,13 @@
 import { KpiCard } from "@/components/dashboard/kpi-card";
-import { AlertsPanel } from "@/components/dashboard/alerts-panel";
 import { RidershipChart } from "@/components/dashboard/ridership-chart";
 import { ComparisonChart } from "@/components/dashboard/comparison-chart";
 import { Users, Bus, Clock, Route } from "lucide-react";
+import { DashboardAlerts } from "@/components/dashboard/dashboard-alerts";
 
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
+      <DashboardAlerts />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="Total Buses"
@@ -34,13 +35,8 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3">
-          <RidershipChart />
-        </div>
-        <div className="lg:col-span-2">
-          <AlertsPanel />
-        </div>
+      <div className="grid gap-6">
+        <RidershipChart />
       </div>
       
       <div>

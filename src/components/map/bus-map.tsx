@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { buses as initialBuses, routes } from "@/lib/data";
 import type { Bus as BusType } from "@/lib/types";
 import { BusFront, User, Clock } from "lucide-react";
@@ -44,14 +45,13 @@ export function BusMap() {
   const getRouteInfo = (routeId: string) => routes.find(r => r.id === routeId);
 
   return (
-    <div className="relative h-[60vh] w-full rounded-lg bg-muted/50 overflow-hidden border">
-       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
+    <div className="relative h-[60vh] w-full rounded-lg overflow-hidden border">
+       <Image
+        src="https://images.unsplash.com/photo-1582845948279-857a21689153?q=80&w=2070&auto=format&fit=crop"
+        alt="City map"
+        fill
+        className="object-cover"
+        data-ai-hint="city map satellite"
       />
       {buses.map((bus) => (
         <Popover key={bus.id} onOpenChange={(isOpen) => setActiveBus(isOpen ? bus : null)}>
@@ -63,7 +63,7 @@ export function BusMap() {
             >
               <BusFront
                 className={cn(
-                    "h-8 w-8 text-primary transition-transform duration-300 hover:scale-125",
+                    "h-8 w-8 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-125",
                     activeBus?.id === bus.id && "scale-125 text-accent animate-pulse"
                 )}
               />

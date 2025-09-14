@@ -3,6 +3,7 @@ import { RidershipChart } from "@/components/dashboard/ridership-chart";
 import { ComparisonChart } from "@/components/dashboard/comparison-chart";
 import { Users, Bus, Clock, Route } from "lucide-react";
 import { DashboardAlerts } from "@/components/dashboard/dashboard-alerts";
+import { AlertsPanel } from "@/components/dashboard/alerts-panel";
 
 export default function DashboardPage() {
   return (
@@ -35,8 +36,9 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
         <RidershipChart />
+        <AlertsPanel />
       </div>
       
       <div>

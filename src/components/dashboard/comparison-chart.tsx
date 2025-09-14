@@ -8,7 +8,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig } from "@/components/ui/chart";
 
 const data = [
   { route: "335E", original: 18, optimized: 12 },
@@ -17,6 +17,18 @@ const data = [
   { route: "V-500K", original: 22, optimized: 18 },
   { route: "502H", original: 12, optimized: 9 },
 ];
+
+const chartConfig = {
+  original: {
+    label: "Original Wait Time",
+    color: "hsl(var(--chart-2))",
+  },
+  optimized: {
+    label: "Optimized Wait Time",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig;
+
 
 export function ComparisonChart() {
   return (
@@ -28,8 +40,7 @@ export function ComparisonChart() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="h-[350px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <ChartContainer config={chartConfig} className="h-[350px] w-full">
             <BarChart data={data}>
               <XAxis
                 dataKey="route"
@@ -46,12 +57,11 @@ export function ComparisonChart() {
                 tickFormatter={(value) => `${value} min`}
               />
               <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--muted))' }}/>
-              <Legend />
-              <Bar dataKey="original" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} name="Original Wait Time" />
-              <Bar dataKey="optimized" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} name="Optimized Wait Time" />
+              <Legend content={<ChartLegendContent />} />
+              <Bar dataKey="original" fill="var(--color-original)" radius={[4, 4, 0, 0]} name="Original Wait Time" />
+              <Bar dataKey="optimized" fill="var(--color-optimized)" radius={[4, 4, 0, 0]} name="Optimized Wait Time" />
             </BarChart>
-          </ResponsiveContainer>
-        </div>
+          </ChartContainer>
       </CardContent>
     </Card>
   );

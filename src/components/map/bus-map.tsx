@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { buses as initialBuses, routes } from "@/lib/data";
 import type { Bus as BusType } from "@/lib/types";
 import { BusFront, User, Clock } from "lucide-react";
@@ -45,14 +44,7 @@ export function BusMap() {
   const getRouteInfo = (routeId: string) => routes.find(r => r.id === routeId);
 
   return (
-    <div className="relative h-[60vh] w-full rounded-lg overflow-hidden border">
-       <Image
-        src="https://images.unsplash.com/photo-1549643276-f7c1d102e84e?q=80&w=2070&auto=format&fit=crop"
-        alt="City map"
-        fill
-        className="object-cover"
-        data-ai-hint="city map abstract"
-      />
+    <div className="relative h-[60vh] w-full rounded-lg overflow-hidden border bg-muted/20">
       {buses.map((bus) => (
         <Popover key={bus.id} onOpenChange={(isOpen) => setActiveBus(isOpen ? bus : null)}>
           <PopoverTrigger asChild>
@@ -63,7 +55,7 @@ export function BusMap() {
             >
               <BusFront
                 className={cn(
-                    "h-8 w-8 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-125",
+                    "h-8 w-8 text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-125",
                     activeBus?.id === bus.id && "scale-125 text-accent animate-pulse"
                 )}
               />

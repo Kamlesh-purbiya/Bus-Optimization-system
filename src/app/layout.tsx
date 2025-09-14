@@ -8,7 +8,7 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import { ChatDialog } from "@/components/chat/chat-dialog";
 
 export const metadata: Metadata = {
-  title: "TransitSage",
+  title: "Bus For You",
   description: "Smart Bus Management System",
 };
 

@@ -84,7 +84,7 @@ export function ChatDialog() {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[425px] grid-rows-[auto_1fr_auto] h-[80vh]">
           <DialogHeader>
-            <DialogTitle>Chat with Sage</DialogTitle>
+            <DialogTitle>Chat with Bus For You</DialogTitle>
           </DialogHeader>
           <ScrollArea className="flex-grow p-4 border-y" ref={scrollAreaRef}>
             <div className="space-y-4">

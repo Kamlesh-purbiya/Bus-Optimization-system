@@ -24,7 +24,7 @@ const titles: { [key: string]: string } = {
 
 export function AppHeader() {
   const pathname = usePathname();
-  const title = titles[pathname] || "TransitSage";
+  const title = titles[pathname] || "Bus For You";
 
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/60 px-4 backdrop-blur-sm sm:px-6">

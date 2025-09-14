@@ -40,7 +40,7 @@ export function AppSidebar() {
             <Bus className="h-5 w-5" />
           </div>
           <span className="text-lg font-semibold text-sidebar-foreground">
-            TransitSage
+            Bus For You
           </span>
         </div>
       </SidebarHeader>
@@ -48,7 +48,7 @@ export function AppSidebar() {
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} passHref>
+              <Link href={item.href}>
                 <SidebarMenuButton
                   isActive={pathname === item.href}
                   tooltip={item.label}

@@ -34,17 +34,7 @@ export async function generateChatResponse(
 ): Promise<GenerateChatResponseOutput> {
   return generateChatResponseFlow(input);
 }
-
-const chatPrompt = `You are a helpful AI assistant for the TransitSage bus management app. Your name is Sage.
-      
-You can answer questions about the app, bus routes, and provide general assistance to users.
-
-You must be able to understand and respond in the following languages: English, Hindi, Gujarati, and Hinglish. Detect the user's language from their message and respond in the same language.
-
-Keep your responses concise and friendly.
-`;
   
-
 const generateChatResponseFlow = ai.defineFlow(
   {
     name: 'generateChatResponseFlow',
@@ -54,23 +44,23 @@ const generateChatResponseFlow = ai.defineFlow(
   async (input) => {
     const { history, message } = input;
 
-    const fullHistory = [
-      ...history,
-      {
-        role: 'user' as const,
-        content: [{ text: message }],
-      },
-    ];
-
     const { output } = await ai.generate({
-      history: fullHistory,
-      prompt: chatPrompt,
+      model: 'gemini-2.5-flash',
+      history: history,
+      prompt: `You are a helpful AI assistant for the Bus For You bus management app. Your name is Sage.
+      
+You can answer questions about the app, bus routes, and provide general assistance to users.
+
+You must be able to understand and respond in the following languages: English, Hindi, Gujarati, and Hinglish. Detect the user's language from their message and respond in the same language.
+
+Keep your responses concise and friendly.
+
+User message: ${message}`,
       output: {
-        format: 'json',
-        schema: GenerateChatResponseOutputSchema,
+        format: 'text'
       }
     });
 
-    return output!;
+    return { response: output! };
   }
 );

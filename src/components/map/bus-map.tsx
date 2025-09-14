@@ -47,11 +47,11 @@ export function BusMap() {
   return (
     <div className="relative h-[60vh] w-full rounded-lg overflow-hidden border">
        <Image
-        src="https://images.unsplash.com/photo-1582845948279-857a21689153?q=80&w=2070&auto=format&fit=crop"
+        src="https://images.unsplash.com/photo-1549643276-f7c1d102e84e?q=80&w=2070&auto=format&fit=crop"
         alt="City map"
         fill
         className="object-cover"
-        data-ai-hint="city map satellite"
+        data-ai-hint="city map abstract"
       />
       {buses.map((bus) => (
         <Popover key={bus.id} onOpenChange={(isOpen) => setActiveBus(isOpen ? bus : null)}>

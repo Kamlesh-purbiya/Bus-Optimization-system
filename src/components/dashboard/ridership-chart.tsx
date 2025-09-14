@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import {
   Card,
   CardContent,
@@ -11,22 +11,22 @@ import {
 import { ChartContainer, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig } from "@/components/ui/chart";
 
 const data = [
-  { time: "8am", forecasted: 4000, actual: 3800 },
-  { time: "9am", forecasted: 4500, actual: 4600 },
-  { time: "10am", forecasted: 4200, actual: 4100 },
-  { time: "11am", forecasted: 3800, actual: 3900 },
-  { time: "12pm", forecasted: 3500, actual: 3400 },
-  { time: "1pm", forecasted: 3700, actual: 3800 },
+  { time: "8am", current: 3800, capacity: 5000 },
+  { time: "9am", current: 4600, capacity: 5000 },
+  { time: "10am", current: 4100, capacity: 5000 },
+  { time: "11am", current: 3900, capacity: 5000 },
+  { time: "12pm", current: 3400, capacity: 5000 },
+  { time: "1pm", current: 3800, capacity: 5000 },
 ];
 
 const chartConfig = {
-  forecasted: {
-    label: "Forecasted",
-    color: "hsl(var(--chart-2))",
-  },
-  actual: {
-    label: "Actual",
+  current: {
+    label: "Current Ridership",
     color: "hsl(var(--chart-1))",
+  },
+  capacity: {
+    label: "Capacity",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
@@ -34,14 +34,14 @@ export function RidershipChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Ridership: Forecast vs. Actual</CardTitle>
+        <CardTitle>Current Ridership vs. Capacity</CardTitle>
         <CardDescription>
-          Hourly passenger count comparison for today.
+          Hourly passenger count compared to total capacity.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[300px] w-full">
-            <BarChart data={data}>
+            <BarChart data={data} barCategoryGap={ "5%"}>
                 <XAxis
                     dataKey="time"
                     stroke="#888888"
@@ -58,8 +58,8 @@ export function RidershipChart() {
                 />
                 <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--muted))' }} />
                 <Legend content={<ChartLegendContent />} />
-                <Bar dataKey="forecasted" fill="var(--color-forecasted)" radius={[4, 4, 0, 0]} name="Forecasted" />
-                <Bar dataKey="actual" fill="var(--color-actual)" radius={[4, 4, 0, 0]} name="Actual" />
+                <Bar dataKey="current" fill="var(--color-current)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="capacity" fill="var(--color-capacity)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ChartContainer>
       </CardContent>

@@ -18,6 +18,7 @@ import {
   BrainCircuit,
   Bus,
   MoreHorizontal,
+  Ticket,
 } from "lucide-react";
 import type { NavItem } from "@/lib/types";
 
@@ -25,6 +26,7 @@ const navItems: NavItem[] = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/map", label: "Live Map", icon: Map },
   { href: "/prediction", label: "Demand Prediction", icon: BrainCircuit },
+  { href: "/tickets", label: "Book Tickets", icon: Ticket },
 ];
 
 export function AppSidebar() {

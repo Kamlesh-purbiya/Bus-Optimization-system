@@ -18,6 +18,7 @@ const titles: { [key: string]: string } = {
   "/": "Dashboard",
   "/map": "Live Map",
   "/prediction": "Demand Prediction",
+  "/tickets": "Book Tickets",
 };
 
 export function AppHeader() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import {
   Card,
   CardContent,
@@ -11,21 +11,21 @@ import {
 import { ChartContainer, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartConfig } from "@/components/ui/chart";
 
 const data = [
-  { route: "335E", original: 18, optimized: 12 },
-  { route: "500D", original: 25, optimized: 15 },
-  { route: "225C", original: 15, optimized: 10 },
-  { route: "V-500K", original: 22, optimized: 18 },
-  { route: "502H", original: 12, optimized: 9 },
+  { hour: "8am", actual: 150, predicted: 160 },
+  { hour: "9am", actual: 250, predicted: 240 },
+  { hour: "10am", actual: 180, predicted: 185 },
+  { hour: "11am", actual: 200, predicted: 190 },
+  { hour: "12pm", actual: 220, predicted: 230 },
 ];
 
 const chartConfig = {
-  original: {
-    label: "Original Wait Time",
-    color: "hsl(var(--chart-2))",
-  },
-  optimized: {
-    label: "Optimized Wait Time",
+  actual: {
+    label: "Actual Ridership",
     color: "hsl(var(--chart-1))",
+  },
+  predicted: {
+    label: "AI Predicted Demand",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
@@ -34,16 +34,16 @@ export function ComparisonChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Schedule Optimization Impact</CardTitle>
+        <CardTitle>Ridership: Actual vs. Predicted</CardTitle>
         <CardDescription>
-          Comparison of average passenger wait times (in minutes) before and after optimization.
+          Comparison of actual ridership against AI-predicted demand for Route 335E.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[350px] w-full">
             <BarChart data={data}>
               <XAxis
-                dataKey="route"
+                dataKey="hour"
                 stroke="#888888"
                 fontSize={12}
                 tickLine={false}
@@ -54,12 +54,12 @@ export function ComparisonChart() {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value) => `${value} min`}
+                tickFormatter={(value) => `${value}`}
               />
               <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--muted))' }}/>
               <Legend content={<ChartLegendContent />} />
-              <Bar dataKey="original" fill="var(--color-original)" radius={[4, 4, 0, 0]} name="Original Wait Time" />
-              <Bar dataKey="optimized" fill="var(--color-optimized)" radius={[4, 4, 0, 0]} name="Optimized Wait Time" />
+              <Bar dataKey="actual" fill="var(--color-actual)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="predicted" fill="var(--color-predicted)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ChartContainer>
       </CardContent>

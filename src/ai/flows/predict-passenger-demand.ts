@@ -19,8 +19,15 @@ const PredictPassengerDemandInputSchema = z.object({
 });
 export type PredictPassengerDemandInput = z.infer<typeof PredictPassengerDemandInputSchema>;
 
+const DemandForecastItemSchema = z.object({
+  hour: z.string().describe("The hour for the forecast (e.g., '8am', '9am', '10am')."),
+  demand: z.number().describe('The predicted number of passengers for that hour.'),
+});
+
 const PredictPassengerDemandOutputSchema = z.object({
-  demandForecast: z.record(z.string(), z.number()).describe('A map of hour to predicted passenger count for the next few hours.'),
+  demandForecast: z
+    .array(DemandForecastItemSchema)
+    .describe('An array of demand forecast objects for the next few hours.'),
   analysis: z.string().describe('An analysis of the factors affecting the demand forecast.'),
 });
 export type PredictPassengerDemandOutput = z.infer<typeof PredictPassengerDemandOutputSchema>;
@@ -43,10 +50,10 @@ const predictPassengerDemandPrompt = ai.definePrompt({
   Current Timestamp: {{{timestamp}}}
   Route ID: {{{routeId}}}
 
-  Provide a demand forecast as a JSON object mapping each of the next few hours to the predicted passenger count.
+  Provide a demand forecast as an array of objects, where each object contains the hour and the predicted passenger count.
   Also, provide a brief analysis of the factors influencing the demand forecast.
 
-  Ensure that the demandForecast contains data for each of the next few hours.
+  Ensure that the demandForecast array contains data for each of the next 4-5 hours.
 `,
 });
 

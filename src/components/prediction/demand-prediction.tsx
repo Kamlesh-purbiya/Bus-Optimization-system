@@ -66,7 +66,7 @@ export function DemandPrediction() {
     setIsLoading(false);
   }
   
-  const chartData = prediction ? Object.entries(prediction.demandForecast).map(([hour, demand]) => ({ hour: `${parseInt(hour.split('T')[1])}:00`, demand })) : [];
+  const chartData = prediction ? prediction.demandForecast : [];
 
 
   return (

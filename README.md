@@ -24,6 +24,10 @@ This project is built with a modern, robust, and scalable technology stack:
 - **Charting**: [Recharts](https://recharts.org/) for creating beautiful and interactive data visualizations on the dashboard.
 - **Language**: [TypeScript](https://www.typescriptlang.org/) for type safety and improved developer experience.
 
+## Database and Data
+
+For demonstration purposes, this application **does not use an external database**. All data, including routes, bus locations, alerts, and historical passenger information, is currently hardcoded in the `src/lib/data.ts` file. This allows the prototype to be fully functional without requiring a database setup.
+
 ## Getting Started
 
 To get the project up and running on your local machine, follow these steps:
@@ -55,6 +59,6 @@ To get the project up and running on your local machine, follow these steps:
 
 The "Bus For You" app leverages the power of Google's Gemini model through Genkit to provide several intelligent features:
 
-- **Demand Prediction**: The flow in `src/ai/flows/predict-passenger-demand.ts` analyzes historical data to forecast passenger counts for upcoming hours, enabling proactive adjustments to bus schedules.
+- **Demand Prediction**: Instead of using a traditional statistical model like ARIMA, the flow in `src/ai/flows/predict-passenger-demand.ts` uses the general reasoning capabilities of the Gemini model. It analyzes historical data provided in the prompt to forecast passenger counts for upcoming hours, mimicking how a human data analyst would approach the task.
 - **Route Search**: The flow in `src/ai/flows/get-routes-for-destination.ts` intelligently parses user queries to match them with the most relevant bus routes from the available data.
 - **Conversational AI**: The chatbot, defined in `src/ai/flows/chat.ts`, uses the Gemini model's conversational abilities to provide support in multiple languages, making the app more accessible to a diverse user base.
